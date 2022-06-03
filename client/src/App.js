@@ -16,12 +16,17 @@ function App() {
   }, [])
 
   const submitReview =()=>{
+
     Axios.post("http://localhost:3001/api/insert",{
       startUpName:startUpName,
       startUpReview:startUpReview,
-    }).then(()=>{
-      alert("successful insert");
     });
+
+      setStartUpList([
+        ...startUpReviewList, 
+        {startUpName:startUpName,startUpReview:startUpReview},
+      ]);
+    
   };
   return (
     <div className="App">
@@ -40,7 +45,15 @@ function App() {
       }} />
       <button onClick={submitReview}>Submit</button>
       {startUpReviewList.map((val)=>{
-        return <h1>StartUpName:{val.startUpName}  | StartUp Review : {val.startUpReview}</h1>
+        return (
+          <div className="card">
+            <h1>{val.startUpName}</h1>
+            <p>{val.startUpReview}</p>
+            <button>Delete</button>
+            <input type="text" id="updateInput"/>
+            <button>Update</button>
+            </div>
+        );
       })}
       </div>
     </div>
