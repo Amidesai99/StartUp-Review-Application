@@ -5,6 +5,7 @@ const app = express();
 const mysql = require("mysql2");
 
 
+
 const db = mysql.createPool({
     host:"localhost",
     user:"root",
@@ -26,15 +27,18 @@ app.get('/api/get', (req,res)=>{
 
 app.post("/api/insert", (req,res)=>{
 
-    const startUpName = req.body.startName;
+    const startUpName = req.body.startUpName;
     const startUpReview = req.body.startUpReview;
     const sqlInsert = "INSERT INTO startup_reviews(startUpName,startUpReview) VALUES (?,?)";
+    
     db.query(sqlInsert, [startUpName,startUpReview], (err,result)=> {
         console.log(result);
 
 
     });
 });
+
+
 
 app.listen(3001, () => {
     console.log("running on port 3001");

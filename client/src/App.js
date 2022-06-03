@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from "react";
 import './App.css';
-import Axios from 'axios'
+import Axios from 'axios';
 
 
 function App() {
@@ -9,11 +9,13 @@ function App() {
   const [startUpReview,setStartUpReview]= useState('');
   const [startUpReviewList,setStartUpList] = useState([])
 
+  
+
   useEffect(() => {
     Axios.get("http://localhost:3001/api/get").then((response)=>{
       setStartUpList(response.data);
     })
-  }, [])
+  }, []);
 
   const submitReview =()=>{
 
@@ -21,20 +23,32 @@ function App() {
       startUpName:startUpName,
       startUpReview:startUpReview,
     });
-
-      setStartUpList([
-        ...startUpReviewList, 
+      
+    setStartUpList([
+      ...startUpReviewList,
         {startUpName:startUpName,startUpReview:startUpReview},
       ]);
+  
+      
+    
+        
     
   };
+
+  
+  
+
+
+  
+
+
   return (
     <div className="App">
       <h1>STARTUP REVIEW APPLICATION</h1>
 
       <div className="form">
       <label > STARTUP NAME: </label>
-      <input type="text" name="startUPName" onChange={(e)=>{
+      <input type="text" name="startUpName" onChange={(e)=>{
         setStartUpName(e.target.value);
       }}
 
@@ -44,17 +58,19 @@ function App() {
         setStartUpReview(e.target.value);
       }} />
       <button onClick={submitReview}>Submit</button>
-      {startUpReviewList.map((val)=>{
+       {startUpReviewList.map((val)=>{
         return (
-          <div className="card">
+          
+          <div className="card" key={val.id}>
+            
             <h1>{val.startUpName}</h1>
             <p>{val.startUpReview}</p>
-            <button>Delete</button>
-            <input type="text" id="updateInput"/>
-            <button>Update</button>
+            
             </div>
-        );
-      })}
+
+        ) 
+          
+      })} 
       </div>
     </div>
   );
